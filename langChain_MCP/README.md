@@ -310,14 +310,14 @@ flowchart TD
     F --> G
     G --> H
 
-    style A fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
-    style B fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
-    style C fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
-    style D fill:#E91E63,stroke:#AD1457,stroke-width:2px,color:#fff
-    style E fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
-    style F fill:#00BCD4,stroke:#00838F,stroke-width:2px,color:#fff
-    style G fill:#FF5722,stroke:#D84315,stroke-width:2px,color:#fff
-    style H fill:#8BC34A,stroke:#558B2F,stroke-width:3px,color:#000
+    style A fill:#2196F3,color:#fff,stroke:#1565C0,stroke-width:2px
+    style B fill:#FF9800,color:#fff,stroke:#E65100,stroke-width:2px
+    style C fill:#9C27B0,color:#fff,stroke:#6A1B9A,stroke-width:2px
+    style D fill:#E91E63,color:#fff,stroke:#AD1457,stroke-width:2px
+    style E fill:#4CAF50,color:#fff,stroke:#2E7D32,stroke-width:2px
+    style F fill:#00BCD4,color:#fff,stroke:#00838F,stroke-width:2px
+    style G fill:#FF5722,color:#fff,stroke:#D84315,stroke-width:2px
+    style H fill:#8BC34A,color:#000,stroke:#558B2F,stroke-width:3px
 ```
 
 ### Diagram Legend
