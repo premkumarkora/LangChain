@@ -334,18 +334,19 @@ flowchart TB
         R[/"📋 Final Answer<br/>'London is 15°C with rain.<br/>Here are the UK news...'"/]
     end
 
-    Q --> LLM
-    LLM <--> MCP
-    MCP <--> WS
-    MCP <--> NS
-    MCP <--> US
-    WS --> API1
-    NS --> API2
-    US --> API3
-    API1 --> MCP
-    API2 --> MCP
-    API3 --> MCP
-    LLM --> R
+    Q ==>|"1️⃣ Ask"| LLM
+    LLM ==>|"2️⃣ Route"| MCP
+    MCP ==>|"3️⃣"| WS
+    MCP ==>|"3️⃣"| NS
+    MCP ==>|"3️⃣"| US
+    WS ==>|"4️⃣ Call"| API1
+    NS ==>|"4️⃣ Call"| API2
+    US ==>|"4️⃣ Run"| API3
+    API1 -.->|"5️⃣ Data"| MCP
+    API2 -.->|"5️⃣ Data"| MCP
+    API3 -.->|"5️⃣ Data"| MCP
+    MCP -.->|"6️⃣ Results"| LLM
+    LLM ==>|"7️⃣ Answer"| R
 
     style Q fill:#3B82F6,color:#fff,stroke:#1D4ED8,stroke-width:3px
     style LLM fill:#F97316,color:#fff,stroke:#C2410C,stroke-width:3px
@@ -363,6 +364,20 @@ flowchart TB
     style SERVERS fill:#F0FDFA,stroke:#14B8A6,stroke-width:2px
     style APIS fill:#ECFDF5,stroke:#10B981,stroke-width:2px
     style RESPONSE fill:#F7FEE7,stroke:#84CC16,stroke-width:2px
+
+    linkStyle 0 stroke:#3B82F6,stroke-width:4px
+    linkStyle 1 stroke:#F97316,stroke-width:4px
+    linkStyle 2 stroke:#06B6D4,stroke-width:3px
+    linkStyle 3 stroke:#EC4899,stroke-width:3px
+    linkStyle 4 stroke:#10B981,stroke-width:3px
+    linkStyle 5 stroke:#06B6D4,stroke-width:3px
+    linkStyle 6 stroke:#EC4899,stroke-width:3px
+    linkStyle 7 stroke:#10B981,stroke-width:3px
+    linkStyle 8 stroke:#22D3EE,stroke-width:3px,stroke-dasharray:5
+    linkStyle 9 stroke:#F472B6,stroke-width:3px,stroke-dasharray:5
+    linkStyle 10 stroke:#34D399,stroke-width:3px,stroke-dasharray:5
+    linkStyle 11 stroke:#8B5CF6,stroke-width:4px,stroke-dasharray:5
+    linkStyle 12 stroke:#84CC16,stroke-width:4px
 ```
 
 ### Diagram Legend
