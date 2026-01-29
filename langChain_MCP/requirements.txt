@@ -1,0 +1,57 @@
+# =============================================================================
+# LangChain + MCP Tutorial - Requirements
+# =============================================================================
+#
+# This project uses COMPLETELY FREE APIs:
+#   - Open-Meteo (Weather): No API key needed!
+#   - NewsData.io (News): Free tier with 200 requests/day
+#   - OpenAI: Required for the LLM (has free credits for new accounts)
+#
+# Installation:
+#   pip install -r requirements.txt
+#
+# Or with virtual environment (recommended):
+#   python -m venv venv
+#   source venv/bin/activate  # macOS/Linux
+#   venv\Scripts\activate     # Windows
+#   pip install -r requirements.txt
+
+# =============================================================================
+# LangChain Core
+# =============================================================================
+
+# LangChain - The main AI framework
+langchain>=0.3.0
+
+# LangChain OpenAI integration
+langchain-openai>=0.2.0
+
+# LangGraph - For creating ReAct agents
+langgraph>=0.2.0
+
+# =============================================================================
+# MCP (Model Context Protocol)
+# =============================================================================
+
+# MCP Python SDK
+mcp>=1.0.0
+
+# FastMCP - Easy MCP server creation with decorators
+fastmcp>=0.1.0
+
+# LangChain MCP Adapters - Bridge between LangChain and MCP
+langchain-mcp-adapters>=0.1.0
+
+# =============================================================================
+# HTTP Client
+# =============================================================================
+
+# httpx - Modern async HTTP client (used for API calls)
+httpx>=0.27.0
+
+# =============================================================================
+# Utilities
+# =============================================================================
+
+# python-dotenv - Load .env files for API keys
+python-dotenv>=1.0.0
