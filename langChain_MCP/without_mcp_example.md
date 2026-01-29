@@ -10,10 +10,11 @@ This document explains `without_mcp_example.py` - a LangChain agent built using 
 
 The `without_mcp_example.py` file shows how to build a multi-tool AI agent the "old way":
 
-- **All tools defined in ONE file** (~350 lines)
-- **All API logic mixed together**
-- **Manual tool registration**
-- **Tightly coupled architecture**
+> [!WARNING]
+> - 🔴 **All tools defined in ONE file** (~350 lines)
+> - 🔴 **All API logic mixed together**
+> - 🔴 **Manual tool registration**
+> - 🔴 **Tightly coupled architecture**
 
 ---
 
@@ -28,10 +29,11 @@ from langchain_core.tools import tool
 from langgraph.prebuilt import create_react_agent
 ```
 
-**What's happening:**
-- Import ALL dependencies needed for EVERY tool
-- Load environment variables for API keys
-- Everything in one place = harder to manage
+> [!WARNING]
+> **What's happening:**
+> - 🔴 Import ALL dependencies needed for EVERY tool
+> - 🔴 Load environment variables for API keys
+> - 🔴 Everything in one place = harder to manage
 
 ---
 
@@ -63,7 +65,8 @@ async def get_forecast(city: str, days: int = 5) -> str:
     # Similar pattern: geocode → API call → format response
 ```
 
-**The Problem:** All this weather logic is mixed in with news and utility tools!
+> [!CAUTION]
+> **🔴 THE PROBLEM:** All this weather logic is mixed in with news and utility tools!
 
 ---
 
@@ -90,7 +93,8 @@ async def get_headlines(category: str, country: str) -> str:
     # Similar pattern for fetching headlines
 ```
 
-**The Problem:** News API key and logic mixed with weather and utils!
+> [!CAUTION]
+> **🔴 THE PROBLEM:** News API key and logic mixed with weather and utils!
 
 ---
 
@@ -131,12 +135,14 @@ ALL_TOOLS = [
 ]
 ```
 
-**The Problem:** Every time you add a tool, you must:
-1. Write the tool function
-2. Manually add it to this list
-3. Hope you didn't break anything else
-
-With MCP, tools are **auto-discovered** from connected servers!
+> [!CAUTION]
+> **🔴 THE PROBLEM:** Every time you add a tool, you must:
+> 1. Write the tool function
+> 2. Manually add it to this list
+> 3. Hope you didn't break anything else
+>
+>
+> ✅ **With MCP, tools are auto-discovered from connected servers!**
 
 ---
 
@@ -179,46 +185,51 @@ async def main():
 
 ## The Problems with This Approach
 
-### ❌ Problem 1: Monolithic File
-- **350+ lines** in one file
-- Hard to navigate
-- Hard to maintain
-- High cognitive load
+> [!CAUTION]
+> ### 🔴 Problem 1: Monolithic File
+> - **350+ lines** in one file
+> - Hard to navigate
+> - Hard to maintain
+> - High cognitive load
 
-### ❌ Problem 2: Tight Coupling
-- Weather, news, and utils code all intertwined
-- Change one thing, risk breaking another
-- Can't update tools independently
+> [!CAUTION]
+> ### 🔴 Problem 2: Tight Coupling
+> - Weather, news, and utils code all intertwined
+> - Change one thing, risk breaking another
+> - Can't update tools independently
 
-### ❌ Problem 3: No Reusability
-- Want to use `get_weather` in another project?
-- Must copy-paste the entire function + helper functions
-- API keys and configs come along too
+> [!CAUTION]
+> ### 🔴 Problem 3: No Reusability
+> - Want to use `get_weather` in another project?
+> - Must copy-paste the entire function + helper functions
+> - API keys and configs come along too
 
-### ❌ Problem 4: Manual Registration
-- Must remember to add each tool to `ALL_TOOLS`
-- Easy to forget
-- No auto-discovery
+> [!CAUTION]
+> ### 🔴 Problem 4: Manual Registration
+> - Must remember to add each tool to `ALL_TOOLS`
+> - Easy to forget
+> - No auto-discovery
 
-### ❌ Problem 5: All API Keys in One Place
-- `OPENAI_API_KEY` + `NEWSDATA_API_KEY` in same file
-- Security risk if file is shared
-- Hard to manage per-tool credentials
+> [!CAUTION]
+> ### 🔴 Problem 5: All API Keys in One Place
+> - `OPENAI_API_KEY` + `NEWSDATA_API_KEY` in same file
+> - Security risk if file is shared
+> - Hard to manage per-tool credentials
 
 ---
 
 ## Comparison: Without MCP vs With MCP
 
-| Aspect | Without MCP | With MCP |
+| Aspect | 🔴 Without MCP | ✅ With MCP |
 |--------|-------------|----------|
-| **Lines of code** | ~350 for 6 tools | ~150 agent + separate servers |
-| **File structure** | 1 giant file | Modular server files |
-| **Adding tools** | Modify main file | Add new server file |
-| **Tool discovery** | Manual list | Automatic |
-| **Reusability** | Copy-paste | Import server |
-| **API key management** | All in one place | Isolated per server |
-| **Maintenance** | Difficult | Easy |
-| **Testing** | Test entire file | Test servers independently |
+| **Lines of code** | ❌ ~350 for 6 tools | ✅ ~150 agent + separate servers |
+| **File structure** | ❌ 1 giant file | ✅ Modular server files |
+| **Adding tools** | ❌ Modify main file | ✅ Add new server file |
+| **Tool discovery** | ❌ Manual list | ✅ Automatic |
+| **Reusability** | ❌ Copy-paste | ✅ Import server |
+| **API key management** | ❌ All in one place | ✅ Isolated per server |
+| **Maintenance** | ❌ Difficult | ✅ Easy |
+| **Testing** | ❌ Test entire file | ✅ Test servers independently |
 
 ---
 
@@ -340,9 +351,12 @@ flowchart TD
 
 ## Key Takeaway
 
-> **The traditional approach works, but doesn't scale.**
+> [!IMPORTANT]
+> **🔴 The traditional approach works, but doesn't scale.**
 >
-> As you add more tools, the file grows, complexity increases, and maintenance becomes a nightmare. MCP solves this by separating tools into independent, reusable servers.
+> As you add more tools, the file grows, complexity increases, and maintenance becomes a nightmare.
+>
+> ✅ **MCP solves this by separating tools into independent, reusable servers.**
 
 ---
 
