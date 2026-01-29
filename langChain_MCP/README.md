@@ -288,6 +288,113 @@ MIT License - Use freely for learning and building!
 
 ---
 
+## Architecture Diagram
+
+```mermaid
+flowchart TD
+    subgraph USER["👤 USER INPUT"]
+        A[/"🧑 User Query:<br/>'What's the weather in Tokyo<br/>and find tech news?'"/]
+    end
+
+    subgraph AGENT["🤖 LANGCHAIN REACT AGENT"]
+        B["🧠 LLM Reasoning<br/>(gpt-4o-mini)<br/><br/>Thinks: I need weather AND news"]
+
+        subgraph ADAPTER["🔌 langchain-mcp-adapters"]
+            C["📡 MCP Client Manager<br/>Routes to correct server"]
+        end
+    end
+
+    subgraph SERVERS["⚡ MCP SERVERS (Modular & Reusable)"]
+        subgraph WEATHER["🌤️ Weather Server"]
+            D1["get_weather()"]
+            D2["get_forecast()"]
+            D3["get_by_coords()"]
+        end
+
+        subgraph NEWS["📰 News Server"]
+            E1["search_news()"]
+            E2["get_headlines()"]
+            E3["get_by_country()"]
+        end
+
+        subgraph UTILS["🔧 Utils Server"]
+            F1["calculate()"]
+            F2["get_time()"]
+            F3["convert_temp()"]
+        end
+    end
+
+    subgraph APIS["🌐 EXTERNAL APIs"]
+        G["☀️ Open-Meteo<br/>(FREE - No Key!)"]
+        H["📋 NewsData.io<br/>(FREE - 200/day)"]
+    end
+
+    subgraph OUTPUT["✅ FINAL OUTPUT"]
+        I[/"🎯 Combined Response:<br/>'Tokyo is 22°C and sunny.<br/>Here are the top tech news...'"/]
+    end
+
+    A --> B
+    B --> C
+    C --> D1
+    C --> E1
+    D1 --> G
+    E1 --> H
+    G --> D1
+    H --> E1
+    D1 --> C
+    E1 --> C
+    C --> B
+    B --> I
+
+    %% Vibrant Colors
+    style A fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    style B fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    style C fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+
+    style D1 fill:#00BCD4,stroke:#00838F,stroke-width:2px,color:#fff
+    style D2 fill:#00BCD4,stroke:#00838F,stroke-width:2px,color:#fff
+    style D3 fill:#00BCD4,stroke:#00838F,stroke-width:2px,color:#fff
+
+    style E1 fill:#E91E63,stroke:#AD1457,stroke-width:2px,color:#fff
+    style E2 fill:#E91E63,stroke:#AD1457,stroke-width:2px,color:#fff
+    style E3 fill:#E91E63,stroke:#AD1457,stroke-width:2px,color:#fff
+
+    style F1 fill:#FF5722,stroke:#D84315,stroke-width:2px,color:#fff
+    style F2 fill:#FF5722,stroke:#D84315,stroke-width:2px,color:#fff
+    style F3 fill:#FF5722,stroke:#D84315,stroke-width:2px,color:#fff
+
+    style G fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style H fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+
+    style I fill:#8BC34A,stroke:#558B2F,stroke-width:3px,color:#000
+
+    %% Subgraph Styles
+    style USER fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+    style AGENT fill:#FFF3E0,stroke:#FF9800,stroke-width:2px
+    style ADAPTER fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+    style SERVERS fill:#ECEFF1,stroke:#607D8B,stroke-width:3px,stroke-dasharray: 5 5
+    style WEATHER fill:#E0F7FA,stroke:#00BCD4,stroke-width:2px
+    style NEWS fill:#FCE4EC,stroke:#E91E63,stroke-width:2px
+    style UTILS fill:#FBE9E7,stroke:#FF5722,stroke-width:2px
+    style APIS fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
+    style OUTPUT fill:#F1F8E9,stroke:#8BC34A,stroke-width:2px
+```
+
+### Diagram Legend
+
+| Color | Component | Description |
+|-------|-----------|-------------|
+| 🔵 **Blue** | User Input | Your question to the agent |
+| 🟠 **Orange** | LLM Reasoning | gpt-4o-mini decides which tools to use |
+| 🟣 **Purple** | MCP Adapter | Routes requests to correct servers |
+| 🔷 **Cyan** | Weather Server | Open-Meteo API tools |
+| 🩷 **Pink** | News Server | NewsData.io API tools |
+| 🟧 **Deep Orange** | Utils Server | Local utility tools |
+| 🟢 **Green** | External APIs | Free API endpoints |
+| 🟩 **Lime** | Final Output | Combined response to user |
+
+---
+
 **Happy coding!** 🚀
 
 If this helped you understand MCP, consider starring the repo!
