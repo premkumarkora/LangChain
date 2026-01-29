@@ -128,28 +128,32 @@ in Paris is 15°C and sunny. If you add them together, you get 5.0 + 15 = 20.0.
 
 ### Flow Diagram (Multi-Tool)
 
-```
-         User Query
-              │
-              ▼
-       ┌─────────────┐
-       │ LLM Reasons │
-       └──────┬──────┘
-              │
-      ┌───────┴───────┐
-      ▼               ▼
-┌──────────┐    ┌──────────┐
-│calculate │    │get_weather│
-│ 25 / 5   │    │  Paris   │
-└────┬─────┘    └────┬─────┘
-     │               │
-     ▼               ▼
-   5.0         15°C sunny
-      └───────┬───────┘
-              ▼
-       ┌─────────────┐
-       │ LLM Combines│  → 5 + 15 = 20
-       └──────┬──────┘
-              ▼
-        Final Answer
+```mermaid
+flowchart TD
+    A[/"🧑 User Query:<br/>divide 25 by 5 and add it to paris weather"/]
+    B["🤖 LLM Reasons:<br/>I need calculate AND get_weather"]
+    C["🔧 calculate<br/>Input: 25 / 5"]
+    D["🔧 get_weather<br/>Input: Paris"]
+    E["📤 Output: 5.0"]
+    F["📤 Output: 15°C and sunny"]
+    G["🤖 LLM Combines Results:<br/>5.0 + 15 = 20.0"]
+    H[/"✅ Final Answer:<br/>The result is 5.0. Paris is 15°C.<br/>Adding them: 20.0"/]
+
+    A --> B
+    B --> C
+    B --> D
+    C --> E
+    D --> F
+    E --> G
+    F --> G
+    G --> H
+
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style C fill:#f3e5f5
+    style D fill:#f3e5f5
+    style E fill:#e8f5e9
+    style F fill:#e8f5e9
+    style G fill:#fff3e0
+    style H fill:#c8e6c9
 ```
