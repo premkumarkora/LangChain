@@ -158,14 +158,16 @@ Try these to see the agent use multiple tools:
     └───────────────┘ └───────────────┘
 ```
 
-### Why Use MCP?
+### Why Use MCP? - Key Benefits
 
-| Without MCP | With MCP |
-|-------------|----------|
-| All tools in one file | Tools in separate servers |
-| Hard to maintain | Easy to maintain |
-| Can't reuse tools | Tools reusable anywhere |
-| Adding tools = big changes | Adding tools = 1 config line |
+| Aspect | Without MCP | With MCP |
+|--------|-------------|----------|
+| **Code Organization** | Everything in one file | Separate, focused servers |
+| **Maintainability** | Change one thing, risk breaking others | Change one server independently |
+| **Reusability** | Copy-paste code to reuse | Any MCP client can use your server |
+| **Adding Tools** | Refactor existing code | Add 1 config line |
+| **Testing** | Test entire system | Test each server in isolation |
+| **Team Work** | Merge conflicts | Teams work on separate servers |
 
 ### Comparison: See It Yourself!
 
