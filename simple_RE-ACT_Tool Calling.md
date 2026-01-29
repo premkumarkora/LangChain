@@ -148,12 +148,12 @@ flowchart TD
     F --> G
     G --> H
 
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#f3e5f5
-    style D fill:#f3e5f5
-    style E fill:#e8f5e9
-    style F fill:#e8f5e9
-    style G fill:#fff3e0
-    style H fill:#c8e6c9
+    style A fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    style B fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    style C fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    style D fill:#E91E63,stroke:#AD1457,stroke-width:2px,color:#fff
+    style E fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style F fill:#00BCD4,stroke:#00838F,stroke-width:2px,color:#fff
+    style G fill:#FF5722,stroke:#D84315,stroke-width:2px,color:#fff
+    style H fill:#8BC34A,stroke:#558B2F,stroke-width:3px,color:#000
 ```
