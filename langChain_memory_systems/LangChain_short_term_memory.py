@@ -53,10 +53,10 @@ from dotenv import load_dotenv
 
 # LangChain imports
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain.memory import ConversationBufferMemory
-from langchain.tools import Tool, StructuredTool
-from langchain.prompts import PromptTemplate
+from langchain_classic.agents import AgentExecutor, create_react_agent
+from langchain_classic.memory import ConversationBufferMemory
+from langchain_classic.tools import Tool, StructuredTool
+from langchain_classic.prompts import PromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage
 
 # Load environment variables
