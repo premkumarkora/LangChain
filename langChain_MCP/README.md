@@ -291,47 +291,100 @@ MIT License - Use freely for learning and building!
 ## Architecture Diagram
 
 ```mermaid
-flowchart TD
-    A[/"🧑 User Query:<br/>'What's the weather in Tokyo<br/>and find tech news?'"/]
-    B["🤖 LLM Reasons:<br/>I need get_weather AND search_news"]
-    C["🌤️ get_weather<br/>Input: Tokyo"]
-    D["📰 search_news<br/>Input: tech news"]
-    E["📤 Output:<br/>22°C and sunny"]
-    F["📤 Output:<br/>Top 5 tech articles..."]
-    G["🤖 LLM Combines Results:<br/>Weather + News"]
-    H[/"✅ Final Answer:<br/>Tokyo is 22°C and sunny.<br/>Here are the top tech news..."/]
+flowchart TB
+    subgraph USER["👤 USER LAYER"]
+        Q[/"🎯 User Query<br/>'What's the weather in London<br/>and find UK news?'"/]
+    end
 
-    A --> B
-    B --> C
-    B --> D
-    C --> E
-    D --> F
-    E --> G
-    F --> G
-    G --> H
+    subgraph AGENT["🤖 LANGCHAIN AGENT LAYER"]
+        LLM["🧠 LangChain ReAct Agent<br/>(gpt-4o-mini)<br/>Thinks → Acts → Observes"]
+    end
 
-    style A fill:#2196F3,color:#fff,stroke:#1565C0,stroke-width:2px
-    style B fill:#FF9800,color:#fff,stroke:#E65100,stroke-width:2px
-    style C fill:#9C27B0,color:#fff,stroke:#6A1B9A,stroke-width:2px
-    style D fill:#E91E63,color:#fff,stroke:#AD1457,stroke-width:2px
-    style E fill:#4CAF50,color:#fff,stroke:#2E7D32,stroke-width:2px
-    style F fill:#00BCD4,color:#fff,stroke:#00838F,stroke-width:2px
-    style G fill:#FF5722,color:#fff,stroke:#D84315,stroke-width:2px
-    style H fill:#8BC34A,color:#000,stroke:#558B2F,stroke-width:3px
+    subgraph ADAPTER["🔌 MCP ADAPTER LAYER"]
+        MCP["⚡ langchain-mcp-adapters<br/>Routes requests to correct server"]
+    end
+
+    subgraph SERVERS["🖥️ MCP SERVERS LAYER"]
+        direction LR
+        subgraph WS["☀️ Weather Server"]
+            W1["get_weather(city)"]
+            W2["get_forecast(city, days)"]
+            W3["get_weather_by_coords(lat, lon)"]
+        end
+        subgraph NS["📰 News Server"]
+            N1["search_news(query)"]
+            N2["get_headlines(category)"]
+            N3["get_news_by_country(country)"]
+        end
+        subgraph US["🛠️ Utils Server"]
+            U1["calculate(expression)"]
+            U2["get_current_time(tz)"]
+            U3["convert_temperature()"]
+        end
+    end
+
+    subgraph APIS["🌐 EXTERNAL APIs"]
+        direction LR
+        API1[("🌤️ Open-Meteo<br/>FREE!<br/>No API Key")]
+        API2[("📡 NewsData.io<br/>FREE Tier<br/>200 req/day")]
+        API3[("💻 Local<br/>No API<br/>Needed")]
+    end
+
+    subgraph RESPONSE["✅ RESPONSE LAYER"]
+        R[/"📋 Final Answer<br/>'London is 15°C with rain.<br/>Here are the UK news...'"/]
+    end
+
+    Q --> LLM
+    LLM <--> MCP
+    MCP <--> WS
+    MCP <--> NS
+    MCP <--> US
+    WS --> API1
+    NS --> API2
+    US --> API3
+    API1 --> MCP
+    API2 --> MCP
+    API3 --> MCP
+    LLM --> R
+
+    style Q fill:#3B82F6,color:#fff,stroke:#1D4ED8,stroke-width:3px
+    style LLM fill:#F97316,color:#fff,stroke:#C2410C,stroke-width:3px
+    style MCP fill:#8B5CF6,color:#fff,stroke:#6D28D9,stroke-width:3px
+    style WS fill:#06B6D4,color:#fff,stroke:#0891B2,stroke-width:2px
+    style NS fill:#EC4899,color:#fff,stroke:#BE185D,stroke-width:2px
+    style US fill:#10B981,color:#fff,stroke:#059669,stroke-width:2px
+    style API1 fill:#22D3EE,color:#000,stroke:#06B6D4,stroke-width:2px
+    style API2 fill:#F472B6,color:#000,stroke:#EC4899,stroke-width:2px
+    style API3 fill:#34D399,color:#000,stroke:#10B981,stroke-width:2px
+    style R fill:#84CC16,color:#000,stroke:#65A30D,stroke-width:3px
+    style USER fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px
+    style AGENT fill:#FFF7ED,stroke:#F97316,stroke-width:2px
+    style ADAPTER fill:#F5F3FF,stroke:#8B5CF6,stroke-width:2px
+    style SERVERS fill:#F0FDFA,stroke:#14B8A6,stroke-width:2px
+    style APIS fill:#ECFDF5,stroke:#10B981,stroke-width:2px
+    style RESPONSE fill:#F7FEE7,stroke:#84CC16,stroke-width:2px
 ```
 
 ### Diagram Legend
 
-| Color | Component | Description |
-|-------|-----------|-------------|
-| 🔵 **Blue** | User Query | Your question to the agent |
-| 🟠 **Orange** | LLM Reasoning | Agent decides which tools to use |
-| 🟣 **Purple** | Weather Tool | Calls Open-Meteo API (FREE!) |
-| 🩷 **Pink** | News Tool | Calls NewsData.io API |
-| 🟢 **Green** | Weather Output | Result from weather API |
-| 🔷 **Cyan** | News Output | Result from news API |
-| 🟧 **Deep Orange** | LLM Combines | Merges all tool results |
-| 🟩 **Lime** | Final Answer | Combined response to user |
+| Layer | Color | Description |
+|-------|-------|-------------|
+| 🔵 **User Layer** | Blue | Your natural language question to the agent |
+| 🟠 **Agent Layer** | Orange | LangChain ReAct Agent powered by gpt-4o-mini |
+| 🟣 **Adapter Layer** | Purple | langchain-mcp-adapters routes to correct servers |
+| 🔷 **Weather Server** | Cyan | MCP server for weather tools (Open-Meteo) |
+| 🩷 **News Server** | Pink | MCP server for news tools (NewsData.io) |
+| 🟢 **Utils Server** | Green | MCP server for utilities (local, no API) |
+| 🟩 **Response** | Lime | Final combined answer from the agent |
+
+### Data Flow
+
+1. **User** sends a natural language query
+2. **LangChain Agent** reasons about which tools are needed
+3. **MCP Adapter** routes requests to appropriate MCP servers
+4. **MCP Servers** call their respective APIs or perform local operations
+5. **Results** flow back through the adapter to the agent
+6. **Agent** combines all results into a coherent final answer
 
 ---
 
